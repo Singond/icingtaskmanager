@@ -565,14 +565,7 @@ AppGroup.prototype = {
       return false;
     }
 
-    let hoverPseudoClass = getPseudoClass(this.state.settings.hoverPseudoClass);
-    let focusPseudoClass = getPseudoClass(this.state.settings.focusPseudoClass);
-    let activePseudoClass = getPseudoClass(this.state.settings.activePseudoClass);
-    let focused = false;
-
-    if (hoverPseudoClass !== focusPseudoClass || hoverPseudoClass !== activePseudoClass) {
-      this.actor.remove_style_pseudo_class(hoverPseudoClass);
-    }
+    this.resetHoverStatus();
 
     if (this.hadClosedPseudoClass && this.groupState.metaWindows.length === 0) {
       this.hadClosedPseudoClass = false;
@@ -581,6 +574,17 @@ AppGroup.prototype = {
 
     this._setFavoriteAttributes();
     this.hoverMenu._onMenuLeave();
+  },
+
+  resetHoverStatus: function() {
+    let hoverPseudoClass = getPseudoClass(this.state.settings.hoverPseudoClass);
+    let focusPseudoClass = getPseudoClass(this.state.settings.focusPseudoClass);
+    let activePseudoClass = getPseudoClass(this.state.settings.activePseudoClass);
+    let focused = false;
+
+    if (hoverPseudoClass !== focusPseudoClass || hoverPseudoClass !== activePseudoClass) {
+      this.actor.remove_style_pseudo_class(hoverPseudoClass);
+    }
   },
 
   setActiveStatus: function(windows){
@@ -628,6 +632,7 @@ AppGroup.prototype = {
     if (this.state.settings.showActive && this.groupState.metaWindows.length > 0) {
       this.actor.add_style_pseudo_class(getPseudoClass(this.state.settings.activePseudoClass));
     }
+    this.resetHoverStatus();
   },
 
   _onWindowDemandsAttention: function (metaWindow) {
