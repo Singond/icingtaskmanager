@@ -703,15 +703,12 @@ class AppThumbnailHoverMenu extends PopupMenu.PopupMenu {
       this.close(true);
     }
     this.box.show();
-    this.box.style = null;
     let thumbnailTheme = this.box.peek_theme_node();
     let padding = thumbnailTheme ? thumbnailTheme.get_horizontal_padding() : null;
     let thumbnailPadding = (padding && (padding > 1 && padding < 21) ? padding : 10);
-    this.box.style = 'padding:' + (thumbnailPadding / 2) + 'px';
     let boxTheme = this.box.peek_theme_node();
     padding = boxTheme ? boxTheme.get_vertical_padding() : null;
     let boxPadding = (padding && (padding > 0) ? padding : 3);
-    this.box.style = 'padding:' + boxPadding + 'px;';
     if (skipThumbnailIconResize) {
       return;
     }
