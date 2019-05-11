@@ -528,6 +528,7 @@ class AppGroup {
     }
 
     this.resetHoverStatus();
+    this.resetFocusStatus();
 
     if (this.hadClosedPseudoClass && this.groupState.metaWindows.length === 0) {
       this.hadClosedPseudoClass = false;
@@ -542,10 +543,23 @@ class AppGroup {
     let hoverPseudoClass = getPseudoClass(this.state.settings.hoverPseudoClass);
     let focusPseudoClass = getPseudoClass(this.state.settings.focusPseudoClass);
     let activePseudoClass = getPseudoClass(this.state.settings.activePseudoClass);
-    let focused = false;
 
     if (hoverPseudoClass !== focusPseudoClass || hoverPseudoClass !== activePseudoClass) {
       this.actor.remove_style_pseudo_class(hoverPseudoClass);
+    }
+  }
+
+  resetFocusStatus() {
+    let focused = false;
+    each(this.groupState.metaWindows, function(metaWindow) {
+      if (getFocusState(metaWindow)) {
+        focused = true;
+        return false;
+      }
+    });
+    if (focused) {
+      let focusPseudoClass = getPseudoClass(this.state.settings.focusPseudoClass);
+      this.actor.add_style_pseudo_class(focusPseudoClass);
     }
   }
 
