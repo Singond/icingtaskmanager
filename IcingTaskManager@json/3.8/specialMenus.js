@@ -853,6 +853,7 @@ class WindowThumbnail {
       this._container.add_actor(this.labelContainer);
     }
 
+    // The close button
     this.button = new St.Button({
       reactive: true
     });
